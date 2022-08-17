@@ -1,0 +1,7 @@
+---
+# handlers file for nfs
+- name: restart nfs service
+  become: yes
+  service:
+    name: nfs-server
+    state: restarted

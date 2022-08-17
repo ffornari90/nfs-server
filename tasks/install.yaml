@@ -1,0 +1,6 @@
+- name: Install NFS packages
+  become: yes
+  ansible.builtin.dnf:
+    name: nfs-utils
+    state: latest
+    update_cache: true

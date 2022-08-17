@@ -1,0 +1,7 @@
+- name: Apply NFS exports template
+  become: yes
+  template: 
+    src: templates/etc/exports.j2
+    dest: /etc/exports
+  notify:
+  - restart nfs service

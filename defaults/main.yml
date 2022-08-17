@@ -1,0 +1,5 @@
+---
+# defaults file for nfs-server
+device_name: /dev/vdb
+volume_size: 100%FREE
+network_cidr: 10.0.1.0/24
