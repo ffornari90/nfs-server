@@ -1,44 +1,51 @@
 - name: Create NFS volume mountpoint
   become: yes
   file:
-    path: /srv/nfs
+    path: /data
     state: directory
-- name: Create a primary partition on "{{ device_name }}"
-  become: yes
-  community.general.parted:
-    device: "{{ device_name }}"
-    number: 1
-    state: present
-    fs_type: ext4
-- name: Create a volume group on top of "{{ device_name }}1"
-  become: yes
-  community.general.lvg:
-    vg: vg00
-    pvs: "{{ device_name }}1"
-- name: Create a logical volume
-  become: yes
-  community.general.lvol:
-    vg: vg00
-    lv: nfs_1
-    size: "{{ volume_size }}"
-- name: Create a ext4 filesystem on /dev/vg00/nfs_1
-  become: yes
-  community.general.filesystem:
-    fstype: ext4
-    dev: /dev/vg00/nfs_1
-- name: Check if nfs drive is already mounted
-  become: yes
-  command: '/bin/mountpoint -q /srv/nfs'
-  register: nfs_checked
-  ignore_errors: yes
-- name: Label ext4 filesystem
-  become: yes
-  shell: "/usr/sbin/e2label /dev/vg00/nfs_1 lv_nfs"
-  when: "nfs_checked.rc != 0"
-- name: Mount up device by label
-  become: yes
-  ansible.posix.mount:
-    path: /srv/nfs
-    src: LABEL=lv_nfs
-    fstype: ext4
-    state: present
+
+#- name: Create a primary partition on "{{ device_name }}"
+#  become: yes
+#  community.general.parted:
+#    device: "{{ device_name }}"
+#    number: 1
+#    state: present
+#    fs_type: ext4
+
+#- name: Create a volume group on top of "{{ device_name }}1"
+#  become: yes
+#  community.general.lvg:
+#    vg: vg00
+#    pvs: "{{ device_name }}1"
+
+#- name: Create a logical volume
+#  become: yes
+#  community.general.lvol:
+#    vg: vg00
+#    lv: nfs_1
+#    size: "{{ volume_size }}"
+
+#- name: Create a ext4 filesystem on /dev/vg00/nfs_1
+#  become: yes
+#  community.general.filesystem:
+#    fstype: ext4
+#    dev: /dev/vg00/nfs_1
+
+#- name: Check if nfs drive is already mounted
+#  become: yes
+#  command: '/bin/mountpoint -q /srv/nfs'
+#  register: nfs_checked
+#  ignore_errors: yes
+
+#- name: Label ext4 filesystem
+#  become: yes
+#  shell: "/usr/sbin/e2label /dev/vg00/nfs_1 lv_nfs"
+#  when: "nfs_checked.rc != 0"
+
+#- name: Mount up device by label
+#  become: yes
+#  ansible.posix.mount:
+#    path: /srv/nfs
+#    src: LABEL=lv_nfs
+#    fstype: ext4
+#    state: present

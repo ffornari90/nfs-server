@@ -1,6 +1,5 @@
 ---
 # tasks file for nfs-server
-- import_tasks: configure_env.yaml
 - import_tasks: install.yaml
 - import_tasks: configure_fs.yaml
 - import_tasks: service.yaml
