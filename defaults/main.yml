@@ -2,4 +2,5 @@
 # defaults file for nfs-server
 device_name: /dev/vdb
 volume_size: 100%FREE
-network_cidr: 90.147.174.0/24
+network_cidr: 192.168.170.0/24
+master_private_ip: 192.168.170.166
