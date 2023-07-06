@@ -5,20 +5,13 @@
 
 - name: Remove lines containing "vnode-0" from the hosts file
   become: yes
-  lineinfile:
+  replace:
     path: /etc/hosts
-    state: absent
     regexp: '^.*vnode-0.*$'
-  when: "'vnode-0' in hosts_content.stdout"
-
-- name: Replace /etc/hosts with the updated file
-  become: yes
-  copy:
-    content: "{{ hosts_content.stdout }}"
-    dest: /etc/hosts
+    replace: ''
 
 - name: Add a line to /etc/hosts
   become: yes
   lineinfile:
     path: /etc/hosts
-    line: "{{ master_private_ip }} vnode-0.localdomain"
+    line: "{{ master_private_ip }} vnode-0.localdomain vnode-0"
